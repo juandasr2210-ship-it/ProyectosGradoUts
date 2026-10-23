@@ -21,11 +21,46 @@
 <!DOCTYPE html>
 <html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Trabajos de Grado · Ingeniería de Sistemas UTS</title>
-<link rel="stylesheet" href="<%=ctx%>/css/estilos.css"></head>
+<link rel="stylesheet" href="<%=ctx%>/css/estilos.css">
+<style>
+  body {
+    background: linear-gradient(135deg, #1b4d2a 0%, #2d6b3e 50%, #1b4d2a 100%);
+    min-height: 100vh;
+  }
+  .content-wrapper {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 22px;
+  }
+  .hero {
+    background: rgba(255,255,255,0.95);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    border-top: 5px solid var(--amarillo);
+  }
+  .card {
+    background: rgba(255,255,255,0.95);
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+  }
+  .card h3 { color: #1b4d2a; }
+  .tbl th { background: #1b4d2a; color: white; }
+  .tbl tr:hover td { background: rgba(27,77,42,0.08); }
+  .footer { color: rgba(255,255,255,0.8); text-align: center; padding: 30px 20px; font-size: 14px; }
+  .topbar { background: rgba(27,77,42,0.95); border-bottom: 2px solid var(--amarillo); }
+  .topbar .titulo, .topbar .brand-fb { color: white; }
+  .brand-fb span { color: var(--amarillo) !important; }
+  .btn.primary { background: var(--amarillo); color: #1b4d2a; }
+  .btn.primary:hover { background: #e8c000; }
+  .chip.amarillo { background: var(--amarillo); color: #1b4d2a; }
+</style>
+</head>
 <body>
 <div class="topbar"><a class="brand topbar-brand" href="<%=ctx%>/index.jsp"><img class="logo" src="<%=ctx%>/img/programa-logo.png" alt="Ingeniería de Sistemas UTS" style="height:38px" onload="this.nextElementSibling.style.display='none'" onerror="this.remove()"><span class="brand-fb">Ingeniería de Sistemas <span style="color:var(--amarillo)">UTS</span></span></a>
 <div class="userbox"><a class="btn sm primary" href="<%=ctx%>/login.jsp">Ingresar</a></div></div>
-<div style="max-width:1100px;margin:0 auto;padding:22px">
+<div class="content-wrapper">
 <div class="hero">
   <h1 style="margin:0">Sistema de Gestión de Trabajos de Grado</h1>
   <p>Ingeniería de Sistemas · Banco de ideas, inscripción con comprobante de pago, seguimiento en 6 fases, entregas por URL con historial de versiones, correcciones y cierre con sustentación. Proyectos individuales o en pareja.</p>
