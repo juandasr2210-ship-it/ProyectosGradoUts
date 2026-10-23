@@ -1,0 +1,29 @@
+<%-- conexion.jspf: conexion MySQL (XAMPP). Incluir al inicio de cada JSP con acceso a BD. --%>
+<%@ include file="iconos.jspf" %>
+<%@ page import="java.sql.*" %>
+<%
+  String DB_HOST = System.getenv("MYSQLHOST") != null ? System.getenv("MYSQLHOST") : "localhost";
+  String DB_PORT = System.getenv("MYSQLPORT") != null ? System.getenv("MYSQLPORT") : "3306";
+  String DB_NAME = System.getenv("MYSQLDATABASE") != null ? System.getenv("MYSQLDATABASE") : "sigrado";
+  String DB_USER = System.getenv("MYSQLUSER") != null ? System.getenv("MYSQLUSER") : "root";
+  String DB_PASS = System.getenv("MYSQLPASSWORD") != null ? System.getenv("MYSQLPASSWORD") : "";
+  String DB_URL  = "jdbc:mysql://" + DB_HOST + ":" + DB_PORT + "/" + DB_NAME + "?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=America/Bogota";
+  try { Class.forName("com.mysql.cj.jdbc.Driver"); } catch (Exception _e) {}
+%>
+<%!
+  String sha256(String base) throws Exception {
+    java.security.MessageDigest d = java.security.MessageDigest.getInstance("SHA-256");
+    byte[] h = d.digest(base.getBytes("UTF-8"));
+    StringBuilder s = new StringBuilder();
+    for (byte b : h) s.append(String.format("%02x", b));
+    return s.toString();
+  }
+  String esc(String s) {
+    if (s == null) return "";
+    return s.replace("&","&amp;").replace("<","&lt;").replace(">","&gt;").replace("\"","&quot;");
+  }
+  boolean esUrl(String u) {
+    if (u == null) return false;
+    return u.startsWith("https://") && u.length() <= 500 && u.length() > 12;
+  }
+%>

@@ -1,0 +1,7 @@
+<%-- guard.jspf: exige sesion iniciada --%>
+<%
+  if (session.getAttribute("uid") == null) {
+    response.sendRedirect(request.getContextPath() + "/login.jsp");
+    return;
+  }
+%>

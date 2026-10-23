@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Compiled class file
 *.class
 
@@ -22,3 +23,40 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
+=======
+# Compiled class files
+*.class
+
+# Package files
+*.war
+*.jar
+*.ear
+
+# IDEs
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+.project
+.classpath
+.settings/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Tomcat local work directory
+work/
+
+# Temporary files
+*.tmp
+*.temp
+
+# Database scripts (optional, keep sql/ if you want versioned)
+# sql/*.sql
+>>>>>>> 596bf79 (feat: sistema completo Trabajos de Grado UTS - JSP/MySQL/Tomcat 9)

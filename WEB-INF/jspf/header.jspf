@@ -1,0 +1,99 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%
+  String ctx = request.getContextPath();
+  String rolA = (String) session.getAttribute("rol");
+  String nomA = (String) session.getAttribute("nombres");
+  if (nomA == null) nomA = "";
+  String ini = "";
+  for (String parte : nomA.trim().split("\\s+")) { if (!parte.isEmpty() && ini.length() < 2) ini += parte.substring(0,1).toUpperCase(); }
+  String pagina = request.getRequestURI();
+  java.util.Map<String,String> menu = new java.util.LinkedHashMap<String,String>();
+  menu.put("Inicio", ctx + "/inicio.jsp");
+  menu.put("Mi perfil", ctx + "/perfil.jsp");
+  if ("administrador".equals(rolA)) {
+    menu.put("Banco de ideas", ctx + "/administrador/banco.jsp");
+    menu.put("Propuestas Banco", ctx + "/administrador/propuestas_banco.jsp");
+    menu.put("Proyectos", ctx + "/administrador/proyectos.jsp");
+    menu.put("Usuarios", ctx + "/administrador/usuarios.jsp");
+    menu.put("Periodos", ctx + "/administrador/configuracion.jsp");
+    menu.put("Formatos", ctx + "/administrador/formatos.jsp");
+    menu.put("Base documental", ctx + "/comun/formatos.jsp");
+  } else if ("comite".equals(rolA)) {
+    menu.put("Banco de ideas", ctx + "/comite/banco.jsp");
+    menu.put("Propuestas Banco", ctx + "/comite/propuestas_banco.jsp");
+    menu.put("Proyectos", ctx + "/comite/proyectos.jsp");
+    menu.put("Usuarios", ctx + "/comite/usuarios.jsp");
+    menu.put("Base documental", ctx + "/comun/formatos.jsp");
+  } else if ("docente".equals(rolA)) {
+    menu.put("Banco de ideas", ctx + "/docente/banco.jsp");
+    menu.put("Propuestas Banco", ctx + "/docente/propuestas_banco.jsp");
+    menu.put("Docente Director", ctx + "/docente/director.jsp");
+    menu.put("Docente Evaluador", ctx + "/docente/evaluador.jsp");
+    menu.put("Codirector", ctx + "/docente/codirector.jsp");
+    menu.put("Base documental", ctx + "/comun/formatos.jsp");
+  } else if ("estudiante".equals(rolA)) {
+    menu.put("Banco de ideas", ctx + "/estudiante/banco.jsp");
+    menu.put("Mi proyecto", ctx + "/estudiante/proyecto.jsp");
+    menu.put("Seguimiento", ctx + "/estudiante/seguimiento.jsp");
+    menu.put("Versiones", ctx + "/estudiante/versiones.jsp");
+    menu.put("Base documental", ctx + "/comun/formatos.jsp");
+  }
+  java.util.Map<String,String> iconos = new java.util.HashMap<String,String>();
+  iconos.put("Inicio", ICON("home")); iconos.put("Mi perfil", ICON("user"));
+  iconos.put("Banco de ideas", ICON("bulb")); iconos.put("Propuestas Banco", ICON("file"));
+  iconos.put("Docente Director", ICON("user")); iconos.put("Docente Evaluador", ICON("search"));
+  iconos.put("Codirector", ICON("users")); iconos.put("Proyectos", ICON("folder"));
+  iconos.put("Mi proyecto", ICON("folder")); iconos.put("Seguimiento", ICON("map"));
+  iconos.put("Versiones", ICON("clock")); iconos.put("Usuarios", ICON("users"));
+  iconos.put("Periodos", ICON("calendar")); iconos.put("Formatos", ICON("file"));
+  iconos.put("Base documental", ICON("book"));
+%>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trabajos de Grado · Ingeniería de Sistemas UTS</title>
+<link rel="stylesheet" href="<%=ctx%>/css/estilos.css">
+</head>
+<body>
+<div class="topbar">
+  <div style="display:flex;align-items:center;gap:12px">
+    <span class="titulo">Bienvenido</span>
+  </div>
+  <div class="topbar-right">
+    <% if (session.getAttribute("uid") != null) { %>
+      <div class="user-profile-btn" title="Perfil activo: <%= esc(rolA) %>">
+        <span class="user-avatar"><%= ICON("user") %></span>
+        <span class="user-name"><%= esc(nomA) %></span>
+        <span class="caret">▼</span>
+      </div>
+      <a class="btn sm" href="<%=ctx%>/cambiar_rol.jsp" title="Cambiar de rol"><%= ICON("repeat") %> <small><%= esc(rolA) %></small></a>
+      <a class="btn sm danger" href="<%=ctx%>/logout.jsp" title="Cerrar sesión">Salir</a>
+    <% } else { %>
+      <a class="btn sm primary" href="<%=ctx%>/login.jsp">Ingresar</a>
+    <% } %>
+  </div>
+</div>
+<div class="layout">
+<div class="sidebar">
+  <div class="sidebar-brand">
+    <img class="logo" src="<%=ctx%>/img/programa-logo.png" alt="Ingeniería de Sistemas UTS">
+    <span class="menu-toggle"><%= ICON("menu") %></span>
+  </div>
+  <nav>
+  <% for (java.util.Map.Entry<String,String> item : menu.entrySet()) {
+       String ic = iconos.get(item.getKey()); if (ic == null) ic = ICON("chevR");
+       boolean act = pagina != null && pagina.endsWith(item.getValue().substring(ctx.length())); %>
+    <a href="<%= item.getValue() %>" class="nav-item <%= act ? "active" : "" %>"><%= ic %> <%= item.getKey() %></a>
+  <% } %>
+  </nav>
+</div>
+<div class="content">
+<% String ok = request.getParameter("ok"); if (ok != null && !ok.isEmpty()) { %>
+  <div class="alert ok"><%= esc(ok) %></div>
+<% } %>
+<% String er = request.getParameter("er"); if (er != null && !er.isEmpty()) { %>
+  <div class="alert err"><%= esc(er) %></div>
+<% } %>

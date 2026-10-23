@@ -1,0 +1,6 @@
+</div><!-- /content -->
+</div><!-- /layout -->
+<div class="footer">Sistema de Gestión de Trabajos de Grado · Ingeniería de Sistemas · UTS · 2026</div>
+<script src="<%=request.getContextPath()%>/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,2 @@
+<%@ include file="guard.jspf" %>
+<% if (!"docente".equals(session.getAttribute("rol"))) { response.sendRedirect(request.getContextPath()+"/error.jsp?m=Acceso+denegado:+se+requiere+rol+docente"); return; } %>
